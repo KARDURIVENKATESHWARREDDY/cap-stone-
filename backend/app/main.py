@@ -12,6 +12,15 @@ from app.routes import auth, reports, upload, analytics
 # Initialize database tables
 Base.metadata.create_all(bind=engine)
 
+# Bind LangSmith Tracing Environment Variables on startup
+if settings.LANGCHAIN_TRACING_V2.lower() == "true":
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_ENDPOINT"] = settings.LANGCHAIN_ENDPOINT
+    os.environ["LANGCHAIN_PROJECT"] = settings.LANGCHAIN_PROJECT
+    if settings.LANGCHAIN_API_KEY:
+        os.environ["LANGCHAIN_API_KEY"] = settings.LANGCHAIN_API_KEY
+
+
 # Create exports directory
 os.makedirs("./static/exports", exist_ok=True)
 
