@@ -215,7 +215,7 @@ export default function DashboardPage() {
                     </div>
                     
                     <div className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-850 text-[10px] leading-relaxed text-slate-400">
-                        Average latency for execution runs: <strong className="text-white">{(stats?.average_latency_ms / 1000).toFixed(2)}s</strong>. System meets SLA bounds.
+                        Average latency for execution runs: <strong className="text-white">{((stats?.average_latency_ms ?? 0) / 1000).toFixed(2)}s</strong>. System meets SLA bounds.
                     </div>
                 </div>
             </div>

@@ -148,7 +148,7 @@ export default function ReportsHistoryPage() {
                                     <td className="p-4 font-mono">
                                         {report.evaluation ? (
                                             <span className="font-bold text-slate-200">
-                                                {Math.round(report.evaluation.faithfulness * 100)}%
+                                                {Math.round((report.evaluation.faithfulness ?? 0) * 100)}%
                                             </span>
                                         ) : (
                                             <span className="text-slate-500">-</span>

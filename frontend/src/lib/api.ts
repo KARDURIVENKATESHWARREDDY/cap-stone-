@@ -52,7 +52,11 @@ export interface ReportSummary {
     topic: string;
     status: string;
     evaluation?: {
-        faithfulness: number;
+        faithfulness?: number;
+        answer_relevancy?: number;
+        confidence_score?: number;
+        hallucination_rate?: number;
+        latency_ms?: number;
         estimated_cost: number;
         token_count: number;
     };

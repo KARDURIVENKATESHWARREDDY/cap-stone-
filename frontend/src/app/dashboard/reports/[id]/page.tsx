@@ -184,12 +184,13 @@ export default function ReportDetailPage() {
                             <div className="space-y-3.5">
                                 <span className="text-[10px] font-mono text-slate-500 block">RAGAS METRICS</span>
                                 {[
-                                    { name: "Faithfulness", score: report.evaluation.faithfulness, desc: "Claims aligned with citation chunks" },
-                                    { name: "Answer Relevancy", score: report.evaluation.answer_relevancy, desc: "Directness of report contents to query" },
-                                    { name: "Confidence Score", score: report.evaluation.confidence_score, desc: "Integrated quality average assessment" },
-                                    { name: "Hallucination Rate", score: report.evaluation.hallucination_rate, desc: "Ratio of unverified assertions found", inverted: true }
+                                    { name: "Faithfulness", score: report.evaluation.faithfulness ?? 0, desc: "Claims aligned with citation chunks" },
+                                    { name: "Answer Relevancy", score: report.evaluation.answer_relevancy ?? 0, desc: "Directness of report contents to query" },
+                                    { name: "Confidence Score", score: report.evaluation.confidence_score ?? 0, desc: "Integrated quality average assessment" },
+                                    { name: "Hallucination Rate", score: report.evaluation.hallucination_rate ?? 0, desc: "Ratio of unverified assertions found", inverted: true }
                                 ].map((metric, idx) => {
-                                    const percentage = Math.round(metric.score * 100);
+                                    const score = metric.score ?? 0;
+                                    const percentage = Math.round(score * 100);
                                     let barColor = "bg-blue-500";
                                     if (metric.inverted) {
                                         barColor = percentage > 20 ? "bg-rose-500" : "bg-emerald-500";
