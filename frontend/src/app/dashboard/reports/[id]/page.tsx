@@ -155,6 +155,29 @@ export default function ReportDetailPage() {
 
                 {/* Right Side: RAGAS Quality evaluation panel */}
                 <div className="space-y-6">
+                    {/* Information Provided Card */}
+                    <div className="p-6 rounded-2xl border border-slate-800/80 bg-[#0b1329]/40 glass-panel">
+                        <h3 className="text-xs font-mono font-semibold text-slate-400 mb-3.5 uppercase tracking-wider">Information Provided</h3>
+                        <div className="space-y-3.5">
+                            <div>
+                                <span className="text-[9px] text-slate-500 block font-mono mb-1.5">SUBMITTED TOPIC / PROMPT</span>
+                                <p className="text-xs text-slate-200 bg-slate-950/45 p-3.5 rounded-xl border border-slate-850 font-medium leading-relaxed max-h-36 overflow-y-auto">
+                                    {report.topic}
+                                </p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4 pt-1 text-[9px] font-mono">
+                                <div>
+                                    <span className="text-slate-500 block mb-0.5">REQUEST DATE</span>
+                                    <span className="text-slate-350">{new Date(report.created_at).toLocaleString()}</span>
+                                </div>
+                                <div>
+                                    <span className="text-slate-500 block mb-0.5">DOCUMENT TITLE</span>
+                                    <span className="text-slate-350 truncate block" title={report.title}>{report.title}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Performance & cost widgets card */}
                     <div className="p-6 rounded-2xl border border-slate-800/80 bg-[#0b1329]/40 glass-panel">
                         <h3 className="text-xs font-mono font-semibold text-slate-400 mb-4 uppercase tracking-wider">Metrics and Costs</h3>

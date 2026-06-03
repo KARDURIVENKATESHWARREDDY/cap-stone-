@@ -38,6 +38,7 @@ env/
 *.db
 backend/chroma_db/
 backend/report_agent.db
+backend/static/
 
 # OS files
 .DS_Store

@@ -60,72 +60,7 @@ def generate_mock_llm_response(system_prompt: str, user_prompt: str, json_mode: 
     # Determine which agent is calling by looking at the system prompt
     sys_lower = system_prompt.lower()
     
-    if "planning" in sys_lower or "outline" in sys_lower:
-        plan_data = {
-            "title": f"Comprehensive Analysis of {topic}",
-            "outline": [
-                "Executive Summary",
-                "Introduction and Historical Context",
-                "Key Technology Components and Concepts",
-                "Industry Applications and Use Cases",
-                "Technical Challenges, Limitations, and Risks",
-                "Strategic Recommendations and Future Outlook",
-                "Bibliography and Sources"
-            ],
-            "queries": [
-                f"{topic} overview and fundamentals",
-                f"latest breakthroughs and trends in {topic}",
-                f"{topic} industry standards and best practices",
-                f"{topic} implementation challenges and security risks"
-            ],
-            "keywords": [topic, "industry standard", "best practice", "security", "scalability", "future trends"]
-        }
-        return json.dumps(plan_data)
-        
-    elif "research" in sys_lower or "web search" in sys_lower:
-        findings = [
-            {
-                "title": f"Introduction to {topic}",
-                "url": f"https://en.wikipedia.org/wiki/{topic.replace(' ', '_')}",
-                "content": f"This introductory page covers the history, foundational definitions, and growth patterns of {topic}. It traces key milestones, definitions, and early prototypes in the field.",
-                "credibility_score": 0.95
-            },
-            {
-                "title": f"Emerging Trends in {topic} - MIT Tech Review",
-                "url": f"https://techreview.mit.edu/trends/{topic.replace(' ', '-')}",
-                "content": f"An analysis of recent commercial developments. Details how the adoption rate of {topic} increased by 42% over the last fiscal cycle, driven by scaling, lower integration cost, and automation.",
-                "credibility_score": 0.92
-            },
-            {
-                "title": f"Security and Risks in Modern {topic} Implementations",
-                "url": f"https://www.cisa.gov/resources/{topic.replace(' ', '-')}",
-                "content": f"A technical overview detailing major attack surfaces, prompt injection risks, data leakage issues, and the critical importance of regular audits for security compliance.",
-                "credibility_score": 0.98
-            }
-        ]
-        return json.dumps(findings)
-        
-    elif "verifier" in sys_lower or "citation" in sys_lower:
-        verifications = [
-            {"claim": "Adoption rate increased by 42%", "source_url": f"https://techreview.mit.edu/trends/{topic.replace(' ', '-')}", "status": "verified"},
-            {"claim": "Attack surfaces include prompt injection risks", "source_url": f"https://www.cisa.gov/resources/{topic.replace(' ', '-')}", "status": "verified"},
-            {"claim": "Default implementations lack structured database protection", "source_url": "N/A - System Knowledge", "status": "unverified"}
-        ]
-        return json.dumps({
-            "verifications": verifications,
-            "faithfulness_score": 0.88,
-            "hallucination_rate": 0.12
-        })
-        
-    elif "reviewer" in sys_lower or "grade" in sys_lower:
-        return json.dumps({
-            "score": 8.8,
-            "passed": True,
-            "feedback": "The report provides a thorough overview of the topic. The introduction is highly engaging and layout matches standard research drafts. Suggest adding a summary table to compare technology parameters in section 3.",
-            "edits_made": ["Enhanced transition between Section 2 and Section 3", "Verified punctuation on references"]
-        })
-        
-    elif "writer" in sys_lower or "draft" in sys_lower:
+    if "writer" in sys_lower or "draft" in sys_lower:
         # Generate a premium, multi-section markdown report
         return f"""# Autonomous AI Research Report: {topic}
 
@@ -191,4 +126,70 @@ To maximize ROI while minimizing operational risks, engineering leaders should:
 * Wikipedia Foundation: *{topic} foundations and histories*
 """
 
+    elif "planning" in sys_lower or "outline" in sys_lower:
+        plan_data = {
+            "title": f"Comprehensive Analysis of {topic}",
+            "outline": [
+                "Executive Summary",
+                "Introduction and Historical Context",
+                "Key Technology Components and Concepts",
+                "Industry Applications and Use Cases",
+                "Technical Challenges, Limitations, and Risks",
+                "Strategic Recommendations and Future Outlook",
+                "Bibliography and Sources"
+            ],
+            "queries": [
+                f"{topic} overview and fundamentals",
+                f"latest breakthroughs and trends in {topic}",
+                f"{topic} industry standards and best practices",
+                f"{topic} implementation challenges and security risks"
+            ],
+            "keywords": [topic, "industry standard", "best practice", "security", "scalability", "future trends"]
+        }
+        return json.dumps(plan_data)
+        
+    elif "research" in sys_lower or "web search" in sys_lower:
+        findings = [
+            {
+                "title": f"Introduction to {topic}",
+                "url": f"https://en.wikipedia.org/wiki/{topic.replace(' ', '_')}",
+                "content": f"This introductory page covers the history, foundational definitions, and growth patterns of {topic}. It traces key milestones, definitions, and early prototypes in the field.",
+                "credibility_score": 0.95
+            },
+            {
+                "title": f"Emerging Trends in {topic} - MIT Tech Review",
+                "url": f"https://techreview.mit.edu/trends/{topic.replace(' ', '-')}",
+                "content": f"An analysis of recent commercial developments. Details how the adoption rate of {topic} increased by 42% over the last fiscal cycle, driven by scaling, lower integration cost, and automation.",
+                "credibility_score": 0.92
+            },
+            {
+                "title": f"Security and Risks in Modern {topic} Implementations",
+                "url": f"https://www.cisa.gov/resources/{topic.replace(' ', '-')}",
+                "content": f"A technical overview detailing major attack surfaces, prompt injection risks, data leakage issues, and the critical importance of regular audits for security compliance.",
+                "credibility_score": 0.98
+            }
+        ]
+        return json.dumps(findings)
+        
+    elif "verifier" in sys_lower or "citation" in sys_lower:
+        verifications = [
+            {"claim": "Adoption rate increased by 42%", "source_url": f"https://techreview.mit.edu/trends/{topic.replace(' ', '-')}", "status": "verified"},
+            {"claim": "Attack surfaces include prompt injection risks", "source_url": f"https://www.cisa.gov/resources/{topic.replace(' ', '-')}", "status": "verified"},
+            {"claim": "Default implementations lack structured database protection", "source_url": "N/A - System Knowledge", "status": "unverified"}
+        ]
+        return json.dumps({
+            "verifications": verifications,
+            "faithfulness_score": 0.88,
+            "hallucination_rate": 0.12
+        })
+        
+    elif "reviewer" in sys_lower or "grade" in sys_lower:
+        return json.dumps({
+            "score": 8.8,
+            "passed": True,
+            "feedback": "The report provides a thorough overview of the topic. The introduction is highly engaging and layout matches standard research drafts. Suggest adding a summary table to compare technology parameters in section 3.",
+            "edits_made": ["Enhanced transition between Section 2 and Section 3", "Verified punctuation on references"]
+        })
+        
     return "Generic AI Response generated successfully."
+
