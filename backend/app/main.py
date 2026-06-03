@@ -20,6 +20,15 @@ if settings.LANGCHAIN_TRACING_V2.lower() == "true":
     if settings.LANGCHAIN_API_KEY:
         os.environ["LANGCHAIN_API_KEY"] = settings.LANGCHAIN_API_KEY
 
+if settings.LANGSMITH_TRACING.lower() == "true":
+    os.environ["LANGSMITH_TRACING"] = "true"
+    os.environ["LANGSMITH_ENDPOINT"] = settings.LANGSMITH_ENDPOINT
+    os.environ["LANGSMITH_PROJECT"] = settings.LANGSMITH_PROJECT
+    if settings.LANGSMITH_API_KEY:
+        os.environ["LANGSMITH_API_KEY"] = settings.LANGSMITH_API_KEY
+
+if settings.ANTHROPIC_API_KEY:
+    os.environ["ANTHROPIC_API_KEY"] = settings.ANTHROPIC_API_KEY
 
 # Create exports directory
 os.makedirs("./static/exports", exist_ok=True)
