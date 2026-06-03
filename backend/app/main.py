@@ -1,0 +1,68 @@
+import os
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+
+from app.config import settings
+from app.database import engine, Base, SessionLocal
+from app.models.user import User
+from app.security.auth import get_password_hash
+from app.routes import auth, reports, upload, analytics
+
+# Initialize database tables
+Base.metadata.create_all(bind=engine)
+
+# Create exports directory
+os.makedirs("./static/exports", exist_ok=True)
+
+# Seed Admin User if missing
+db = SessionLocal()
+try:
+    admin_user = db.query(User).filter(User.email == settings.ADMIN_EMAIL).first()
+    if not admin_user:
+        hashed_pwd = get_password_hash(settings.ADMIN_PASSWORD)
+        default_admin = User(
+            email=settings.ADMIN_EMAIL,
+            hashed_password=hashed_pwd,
+            full_name="System Administrator",
+            role="admin"
+        )
+        db.add(default_admin)
+        db.commit()
+        print(f"Seeded default administrator: {settings.ADMIN_EMAIL}")
+finally:
+    db.close()
+
+# Instantiate FastAPI
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    description="Autonomous Multi-Agent Report Generation Engine Backend",
+    version="1.0.0"
+)
+
+# CORS Middleware setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust in production to match Next.js domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mount static files folder
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Include Routers
+app.include_router(auth.router, prefix=settings.API_V1_STR)
+app.include_router(reports.router, prefix=settings.API_V1_STR)
+app.include_router(upload.router, prefix=settings.API_V1_STR)
+app.include_router(analytics.router, prefix=settings.API_V1_STR)
+
+@app.get("/")
+def read_root():
+    return {
+        "status": "online",
+        "service": settings.PROJECT_NAME,
+        "docs": "/docs",
+        "api_v1_base": settings.API_V1_STR
+    }
