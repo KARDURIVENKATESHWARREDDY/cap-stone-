@@ -1,5 +1,5 @@
 {
   "buildCommand": "npm run build --prefix frontend",
-  "outputDirectory": "frontend/.next",
-  "comment": "Trigger fresh Vercel build"
+  "installCommand": "npm install",
+  "devCommand": "npm run dev --prefix frontend"
 }
